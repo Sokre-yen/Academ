@@ -2,16 +2,8 @@
 import { GoogleGenAI, Type, Chat, GenerateContentResponse, Modality } from "@google/genai";
 import { Language, Flashcard, GameQuestion } from "../types";
 
-// Safe access to API KEY with fallback for browser shims
-const getApiKey = () => {
-  try {
-    return process.env.API_KEY || (window as any).process?.env?.API_KEY || "";
-  } catch (e) {
-    return "";
-  }
-};
-
-const ai = new GoogleGenAI({ apiKey: getApiKey() });
+// Initialize AI with API key from environment
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
 export const createTutorChat = (targetLang: Language, proficiency: string, nativeLang: Language): Chat => {
   return ai.chats.create({

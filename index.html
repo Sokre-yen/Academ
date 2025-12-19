@@ -7,15 +7,9 @@
     <title>Academ - Language Learning</title>
     <!-- Robust process shim for browser environments -->
     <script>
-      if (typeof window !== 'undefined' && typeof window.process === 'undefined') {
-        window.process = {
-          env: {
-            API_KEY: ""
-          },
-          nextTick: function(fn) { setTimeout(fn, 0); },
-          browser: true
-        };
-      }
+      window.process = window.process || {};
+      window.process.env = window.process.env || {};
+      window.process.browser = true;
     </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -79,7 +73,6 @@
 </head>
   <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
-    <!-- Explicitly import the entry point as a module -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
