@@ -32,6 +32,10 @@
         animation: shake 0.2s ease-in-out 0s 2;
       }
     </style>
+    <!-- Shim to prevent process is not defined errors -->
+    <script>
+      window.process = { env: { API_KEY: "" } };
+    </script>
   <script type="importmap">
 {
   "imports": {
@@ -49,5 +53,7 @@
 </head>
   <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
+    <!-- Explicitly import the entry point -->
+    <script type="module" src="./index.tsx"></script>
   </body>
 </html>
