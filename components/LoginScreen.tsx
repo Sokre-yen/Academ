@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, BookOpen, AlertCircle, Globe, Loader2, Info } from 'lucide-react';
 import { AppLanguage } from '../translations';
@@ -76,7 +75,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onNavigateToSignUp, ap
                   <div className="mt-2 p-3 bg-white/50 border border-red-100 rounded-lg text-xs text-red-500 flex gap-2">
                     <Info size={14} className="shrink-0 mt-0.5" />
                     <p>
-                      <strong>Tip:</strong> To allow login without verification, disable <strong>"Confirm email"</strong> in your Supabase Dashboard under Authentication > Providers > Email.
+                      <strong>Tip:</strong> To allow login without verification, disable <strong>"Confirm email"</strong> in your Supabase Dashboard under Authentication &nbsp;&gt;&nbsp; Providers &nbsp;&gt;&nbsp; Email.
                     </p>
                   </div>
                 )}

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { ArrowRight, BookOpen, AlertCircle, Globe, Loader2, CheckCircle2 } from 'lucide-react';
 import { AppLanguage } from '../translations';
@@ -12,7 +11,6 @@ interface SignUpScreenProps {
 }
 
 export const SignUpScreen: React.FC<SignUpScreenProps> = ({ onNavigateToLogin, appLanguage, onToggleLanguage, t }) => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -22,12 +20,6 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ onNavigateToLogin, a
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
-    if (name.length < 3) {
-      setError(appLanguage === 'km' ? 'ឈ្មោះត្រូវមានយ៉ាងហោចណាស់ ៣ តួអក្សរ' : 'Full name must be at least 3 characters long');
-      return;
-    }
-
     setIsLoading(true);
 
     try {
@@ -36,7 +28,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ onNavigateToLogin, a
         password,
         options: {
           data: {
-            full_name: name,
+            full_name: email.split('@')[0], // Automatically use part of email as name
           }
         }
       });
@@ -44,14 +36,8 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ onNavigateToLogin, a
       if (authError) {
         setError(authError.message);
       } else {
-        // Sign up successful
         setIsSuccess(true);
-        
-        // If Supabase is configured with "Confirm Email: OFF", data.session will exist
-        // and App.tsx's onAuthStateChange will handle the redirect automatically.
-        // If it's ON, we show a message telling them to check email.
         if (!data.session) {
-           // Wait a bit then go to login if auto-login didn't trigger
            setTimeout(() => {
              onNavigateToLogin();
            }, 3000);
@@ -122,18 +108,6 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({ onNavigateToLogin, a
                 <span>{error}</span>
               </div>
             )}
-
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">{t('auth.fullName')}</label>
-              <input
-                type="text"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                placeholder="John Doe"
-              />
-            </div>
 
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">{t('auth.email')}</label>
