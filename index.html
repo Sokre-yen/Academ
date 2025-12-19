@@ -5,6 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Academ - Language Learning</title>
+    <!-- Robust process shim for browser environments -->
+    <script>
+      if (typeof window !== 'undefined' && typeof window.process === 'undefined') {
+        window.process = {
+          env: {
+            API_KEY: ""
+          },
+          nextTick: function(fn) { setTimeout(fn, 0); },
+          browser: true
+        };
+      }
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
@@ -31,11 +43,25 @@
       .animate-shake {
         animation: shake 0.2s ease-in-out 0s 2;
       }
+
+      /* Simple Fade-in animation */
+      .animate-fade-in {
+        animation: fadeIn 0.4s ease-out;
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Slide-up for questions */
+      .animate-slide-up {
+        animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes slideUp {
+        from { transform: translateY(20px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+      }
     </style>
-    <!-- Shim to prevent process is not defined errors -->
-    <script>
-      window.process = { env: { API_KEY: "" } };
-    </script>
   <script type="importmap">
 {
   "imports": {
@@ -53,7 +79,7 @@
 </head>
   <body class="bg-slate-50 text-slate-900">
     <div id="root"></div>
-    <!-- Explicitly import the entry point -->
+    <!-- Explicitly import the entry point as a module -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
